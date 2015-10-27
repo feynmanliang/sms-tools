@@ -82,4 +82,16 @@ def computeEngEnv(inputFile, window, M, N, H):
     """
 
     ### your code here
+    (fs, x) = UF.wavread(inputFile)
+    w = get_window(window, M)
+    (xmX_db, xpX) = stft.stftAnal(x, fs, w, N, H)
+    xmX = 10.**(1.*xmX_db / 20)
 
+    w = np.multiply(1.*fs / N, range(N))
+    band0_idxs = np.logical_and(np.greater(w, 0), np.less(w, 3000))
+    band1_idxs = np.logical_and(np.greater(w, 3000), np.less(w, 10000))
+    power = lambda x: 10. * np.log10(np.sum(np.power(np.abs(x), 2)))
+    return np.vstack([
+        np.apply_along_axis(power, 1, xmX[:,band0_idxs]),
+        np.apply_along_axis(power, 1, xmX[:,band1_idxs])
+        ]).T
