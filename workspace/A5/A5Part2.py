@@ -65,7 +65,7 @@ def chirpTracker(inputFile='../../sounds/chirp-150-190-linear.wav'):
     M = 4095 # Window size in samples
 
     ### Go through the code below and understand it, do not modify anything ###
-    H = 64                                      # Hop size in samples
+    H = 256                                     # Hop size in samples
     N = int(pow(2, np.ceil(np.log2(M))))        # FFT Size, power of 2 larger than M
     t = -80.0                                   # threshold
     window = 'blackman'                         # Window type

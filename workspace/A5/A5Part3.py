@@ -70,7 +70,7 @@ def mainlobeTracker(inputFile = '../../sounds/sines-440-602-hRange.wav'):
     """
     # Analysis parameters: Modify values of the parameters marked XX
     window = 'blackman'                                          # Window type
-    t = -120                                               # threshold (negative dB)
+    t = -110                                               # threshold (negative dB)
 
     ### Go through the code below and understand it, do not modify anything ###
     M = 2047                                             # Window size
