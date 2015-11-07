@@ -75,11 +75,24 @@ def estimateInharmonicity(inputFile = '../../sounds/piano.wav', t1=0.1, t2=0.5, 
                                         t1 and t2.
     """
     # 0. Read the audio file and obtain an analysis window
+    fs, x = UF.wavread(inputFile)
+    w = get_window(window, M)
 
     # 1. Use harmonic model to compute the harmonic frequencies and magnitudes
+    xhfreq, _, _ = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope=0.01, minSineDur=0.0)
 
     # 2. Extract the time segment in which you need to compute the inharmonicity.
+    xhfreq = xhfreq[np.ceil(fs*t1/H):np.ceil(fs*t2/H),:]
 
     # 3. Compute the mean inharmonicity of the segment
+    inh = map(inharmonicity, xhfreq)
+    return np.mean(inh)
+
+def inharmonicity(hs):
+    acc = []
+    for r in range(len(hs)):
+        if (hs[r] > 0):
+            acc.append(np.abs(hs[r] - (r+1) * hs[0]) / (r+1))
+    return np.mean(acc)
 
 

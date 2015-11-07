@@ -117,7 +117,7 @@ def segmentStableNotesRegions(inputFile = '../../sounds/sax-phrase-short.wav', s
             currSeg.append(i)
         else:
             if len(currSeg) > 0:
-                segments.append([currSeg[0], currSeg[-1]])
+                segments.append([currSeg[0]-1, currSeg[-1]-1])
                 currSeg = []
 
 
